@@ -1,0 +1,38 @@
+cat > .gitignore << 'EOF'
+# Build artifacts
+build/
+cmake-cache/
+*.o
+*.so
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+ns3-rl-env/
+
+# ns-3 specific
+ns-allinone-*/
+*.log
+
+# Backup directories
+*backup*/
+*.bak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large files
+*.tar.gz
+*.tar.bz2
+*.zip
+EOF
