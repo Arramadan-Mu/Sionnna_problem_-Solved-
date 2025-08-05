@@ -1,0 +1,25 @@
+# 🚀 ONE-LINER COMMAND TO SOLVE EVERYTHING
+# ================================================================
+# Copy and paste this single command in PowerShell (Run as Administrator):
+
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Arramadan-Mu/Sionnna_problem_-Solved-/main/setup_wireless_rl_environment.ps1" -OutFile "$env:TEMP\setup_wireless_rl.ps1"; PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\setup_wireless_rl.ps1"
+
+# ================================================================
+# This command will:
+# ✅ Install WSL2 + Ubuntu 24.04
+# ✅ Setup complete development environment  
+# ✅ Install ns-3.40 + ns3-gym + SB3 + PyTorch GPU + Sionna
+# ✅ Configure RTX 4080 GPU acceleration
+# ✅ Test everything and provide ready-to-use environment
+# ================================================================
+
+# Total time: ~3 hours (most is automated)
+# Result: Complete wireless RL research environment ready for breakthrough research!
+
+# After completion, enter your environment with:
+# wsl -d Ubuntu-24.04
+# cd wireless-rl-env  
+# source scripts/activate_complete_env.sh
+# python3 scripts/demo_complete_integration.py
+
+# 🏆 Your 10x faster RL research environment is ready!

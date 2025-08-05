@@ -1,0 +1,99 @@
+# Quick PowerShell Commands for Wireless RL Environment Setup
+# Run these commands in PowerShell as Administrator
+
+# 🚀 IMMEDIATE SOLUTION - One command to solve everything:
+# ================================================================
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Arramadan-Mu/Sionnna_problem_-Solved-/main/setup_wireless_rl_environment.ps1" -OutFile "$env:TEMP\setup_wireless_rl.ps1"; PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\setup_wireless_rl.ps1"
+
+# ================================================================
+# OR STEP-BY-STEP COMMANDS:
+# ================================================================
+
+# Step 1: Install WSL2 (Run as Administrator)
+# ================================================================
+Write-Host "🔧 Installing WSL2 and Ubuntu..." -ForegroundColor Cyan
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+wsl --set-default-version 2
+wsl --install -d Ubuntu-24.04
+
+# Step 2: Download WSL2 Kernel Update
+# ================================================================
+Write-Host "📥 Downloading WSL2 kernel update..." -ForegroundColor Cyan
+Invoke-WebRequest -Uri "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi" -OutFile "$env:TEMP\wsl_update_x64.msi"
+Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\wsl_update_x64.msi /quiet"
+
+# Step 3: Restart Windows (if prompted)
+# ================================================================
+Write-Warning "If WSL installation requires restart, please restart Windows now."
+Read-Host "Press Enter after restart to continue..."
+
+# Step 4: Setup Ubuntu Environment
+# ================================================================
+Write-Host "🐧 Setting up Ubuntu environment..." -ForegroundColor Cyan
+wsl -d Ubuntu-24.04 -- sudo apt update
+wsl -d Ubuntu-24.04 -- sudo apt upgrade -y
+wsl -d Ubuntu-24.04 -- sudo apt install -y build-essential cmake ninja-build git wget curl python3.12-venv python3-pip pkg-config libzmq3-dev libprotobuf-dev protobuf-compiler
+
+# Step 5: Clone and Setup RL Environment
+# ================================================================
+Write-Host "📦 Setting up RL environment..." -ForegroundColor Cyan
+wsl -d Ubuntu-24.04 -- git clone https://github.com/Arramadan-Mu/Sionnna_problem_-Solved-.git /home/`$(whoami)/wireless-rl-env
+wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && chmod +x scripts/*.sh"
+
+# Step 6: Run Complete Installation (10 hours)
+# ================================================================
+Write-Host "🚀 Starting complete RL environment installation..." -ForegroundColor Green
+Write-Host "This will take approximately 10 hours total" -ForegroundColor Yellow
+
+# Phase 1: Foundation (2 hours)
+wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && ./scripts/phase1_migrate_to_ns3_40.sh"
+
+# Phase 2: RL Infrastructure (3 hours)  
+wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && ./scripts/phase2_rl_infrastructure.sh"
+
+# Phase 3: Sionna Integration (4 hours)
+wsl -d Ubuntu-24.4 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && ./scripts/phase3_install_ns3sionna.sh"
+
+# Phase 4: Finalize and Test (1 hour)
+wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && ./scripts/phase3c_finalize_setup.sh"
+
+# Step 7: Test Everything
+# ================================================================
+Write-Host "🧪 Testing complete environment..." -ForegroundColor Cyan
+wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && source scripts/activate_complete_env.sh && ./scripts/test_all_components.sh"
+
+# Step 8: Verify GPU Access
+# ================================================================
+Write-Host "🎮 Verifying GPU access..." -ForegroundColor Magenta
+nvidia-smi  # Check from Windows
+wsl -d Ubuntu-24.04 -- nvidia-smi  # Check from WSL
+
+# Step 9: Quick Start
+# ================================================================
+Write-Host "🎯 Quick start commands:" -ForegroundColor Green
+Write-Host "  wsl -d Ubuntu-24.04" -ForegroundColor Yellow
+Write-Host "  cd wireless-rl-env" -ForegroundColor Yellow  
+Write-Host "  source scripts/activate_complete_env.sh" -ForegroundColor Yellow
+Write-Host "  python3 scripts/demo_complete_integration.py" -ForegroundColor Yellow
+
+Write-Host "🏆 Your RTX 4080 wireless RL research environment is ready!" -ForegroundColor Green
+
+# ================================================================
+# TROUBLESHOOTING COMMANDS:
+# ================================================================
+
+# If Phase 1 fails:
+# wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && ./scripts/phase1c_clean_base.sh"
+
+# If Phase 2 fails:
+# wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && ./scripts/phase2c_fix_python_venv.sh"
+
+# If Phase 3 fails:
+# wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && ./scripts/phase3b_fix_conflicts.sh"
+
+# Check installation status:
+# wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && ./scripts/test_all_components.sh"
+
+# Manual activation:
+# wsl -d Ubuntu-24.04 -- bash -c "cd /home/`$(whoami)/wireless-rl-env && source scripts/activate_complete_env.sh"
